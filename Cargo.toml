@@ -16,11 +16,32 @@ categories = ["data-structures", "database-implementations", "algorithms"]
 name = "fjall"
 path = "src/lib.rs"
 
+[[bin]]
+name = "fjall"
+path = "src/tool.rs"
+required-features = ["tool"]
+
 [features]
 default = ["lz4"]
 lz4 = ["lsm-tree/lz4", "dep:lz4_flex"]
 bytes_1 = ["lsm-tree/bytes_1"]
 metrics = ["lsm-tree/metrics"]
+tool = [
+  "dep:clap",
+  "dep:enquote",
+  "dep:humansize",
+  "dep:parse-size",
+  "dep:path-clean",
+  "dep:pretty-hex",
+  "dep:rustyline",
+  "dep:shlex",
+  "dep:tracing",
+  "dep:tracing-log",
+  "dep:tracing-panic",
+  "dep:tracing-subscriber",
+  "dep:typed-path",
+  "dep:winsplit",
+]
 __internal_whitebox = []
 
 [dependencies]
@@ -33,6 +54,25 @@ dashmap = "6.1.0"
 xxhash-rust = { version = "0.8.15", features = ["xxh3"] }
 lz4_flex = { version = "0.11.5", optional = true }
 flume = { version = "0.12.0", default-features = false }
+
+# crates only used for feature 'tool'
+clap = { version = "4", features = ["derive"], optional = true }
+enquote = { version = "1.1.0", optional = true }
+humansize = { version = "2.1", optional = true }
+parse-size = { version = "1.0", optional = true }
+path-clean = { version = "1.0", optional = true }
+pretty-hex = { version = "0.4", optional = true }
+rustyline = { version = "15", optional = true }
+shlex = { version = "1", optional = true }
+tracing = { version = "0.1", optional = true }
+tracing-log = { version = "0.2", optional = true }
+tracing-panic = { version = "0.1.2", optional = true }
+tracing-subscriber = { version = "0.3", features = ["env-filter", "fmt", "registry"], optional = true }
+typed-path = { version = "0.12.0", optional = true }
+winsplit = { version = "0.1", optional = true }
+
+[target.'cfg(unix)'.dev-dependencies]
+rexpect = "0.5"
 
 [dev-dependencies]
 nanoid = "0.4.0"
