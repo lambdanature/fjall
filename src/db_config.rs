@@ -84,4 +84,39 @@ impl Config {
             cache: Arc::new(Cache::with_capacity_bytes(/* 32 MiB */ 32 * 1_024 * 1_024)),
         }
     }
+
+    /// Returns the number of worker threads.
+    #[must_use]
+    #[cfg(feature = "tool")]
+    pub fn worker_threads(&self) -> usize {
+        self.worker_threads
+    }
+
+    /// Returns the maximum journaling size in bytes.
+    #[must_use]
+    #[cfg(feature = "tool")]
+    pub fn max_journaling_size_in_bytes(&self) -> u64 {
+        self.max_journaling_size_in_bytes
+    }
+
+    /// Returns the journal compression type.
+    #[must_use]
+    #[cfg(feature = "tool")]
+    pub fn journal_compression_type(&self) -> CompressionType {
+        self.journal_compression_type
+    }
+
+    /// Returns the maximum write buffer size in bytes, if set.
+    #[must_use]
+    #[cfg(feature = "tool")]
+    pub fn max_write_buffer_size_in_bytes(&self) -> Option<u64> {
+        self.max_write_buffer_size_in_bytes
+    }
+
+    /// Returns whether manual journal persist is enabled.
+    #[must_use]
+    #[cfg(feature = "tool")]
+    pub fn manual_journal_persist(&self) -> bool {
+        self.manual_journal_persist
+    }
 }
